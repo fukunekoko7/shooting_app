@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <title>Shooting Game</title>
+    <meta charset="utf-8" name="viewport"  content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <link rel="stylesheet" href="static/style.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <div class="game_title">Shooting Game</div>
+    <div class="title_box">
+      <div id="start-screen" class="title_screen">
+        <div class="name_box">
+          <input type="text" name="nickname" id="nickname" placeholder="Your nickname" autofocus><br><br><button class="start" id="start-button">Start</button>
+        </div>
+      </div>
+      <canvas id="canvas-2d"  width="1000" height="1000" class="canvas">図形を表示するには、canvasタグをサポートしたブラウザが必要です。</canvas>
+    </div>
+    <img id="player-image" class="player-img" src="static/img/shapp_player.png" alt="">
+    <script src="/static/game.js"></script>
+  </body>
+</html>
