@@ -34,6 +34,39 @@ $(document).on('keydown keyup', (event) => {
   }
 });
 
+const touches = {};
+$('#canvas-2d').on('touchstart', (event) => {
+  // console.log('touchstart', event, event.touches);
+  socket.emit('shoot');
+  movement.forward = true;
+  Array.from(event.changedTouches).forEach((touch) => {
+  touches[touch.identifier] = {pageX: touch.pageX, pageY: touch.pageY};
+  });
+  event.preventDefault();
+  console.log('touches', touches, event.touches);
+});
+$('#canvas-2d').on('touchmove', (event) => {
+  movement.right = false;
+  movement.left = false;
+  Array.from(event.touches).forEach((touch) => {
+    const startTouch = touches[touch.identifier];
+    movement.right |= touch.pageX - startTouch.pageX > 30;
+    movement.left |= touch.pageX - startTouch.pageX < -30;
+  });
+  socket.emit('movement', movement);
+  event.preventDefault();
+});
+$('#canvas-2d').on('touchend', (event) => {
+  Array.from(event.changedTouches).forEach((touch) => {
+    delete touches[touch.identifier];
+  });
+  if(Object.keys(touches).length === 0) {
+    movement = {};
+    socket.emit('movement', movement);
+  }
+  event.preventDefault();
+});
+
 socket.on('state', function(players,bullets, walls) {
   context.clearRect(0, 0, canvas.width, canvas.height);
 
